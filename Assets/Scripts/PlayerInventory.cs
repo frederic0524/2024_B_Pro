@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour
     public int bushCount = 0;
     public int treeCount = 0;
     // Start is called before the first frame update
-    private void AddItem(ItemType itemType)
+    private void Removeitem(ItemType itemType, int amount =1)
     {
         switch (itemType)
         {
@@ -30,6 +30,12 @@ public class PlayerInventory : MonoBehaviour
                 Debug.Log($"나무 획득! 현재 개수 :{treeCount} ");
                 break;
         }
+    }
+
+    //아이템을 제거하는 함수
+    public bool Removeitem(ItemType itemType, int amount =1)
+    {
+
     }
 
     // Update is called once per frame
