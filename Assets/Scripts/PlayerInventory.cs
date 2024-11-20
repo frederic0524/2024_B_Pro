@@ -9,6 +9,27 @@ public class PlayerInventory : MonoBehaviour
     public int bushCount = 0;
     public int treeCount = 0;
     // Start is called before the first frame update
+
+    public void Start()
+    {
+        survivalStats = GetComponent<SurvivalStats>();
+    }
+
+    public void UseItem(ItemType itemType)
+    {
+        if (GetComponent(itemType) <= 0)
+        {
+            return;
+        }
+
+        switch (itemType)
+        {
+            case ItemType.VegetableStew;
+                Removeitem(ItemType.VegetableStew, 1);
+                SurvivalStats.EatFood(RecipeList.KitchenRecipes[0].hungerRestoreAmount);
+                break;
+        }
+    }
     private void Removeitem(ItemType itemType, int amount =1)
     {
         switch (itemType)
