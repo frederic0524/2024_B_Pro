@@ -18,7 +18,7 @@ public class ConstructibleBuilding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildingMaterial = GetComponent<MeshRenderer>().material;
+        buildingMaterial = GetComponent<MeshRenderer>().material;   
         //초기 상태 설정 (반투명)
         Color color = buildingMaterial.color;
         color.a = 0.5f;
@@ -62,7 +62,7 @@ public class ConstructibleBuilding : MonoBehaviour
         }
         isConstructed = true;
 
-        if (FloatingTextManager.Instance != null)
+        if(FloatingTextManager.Instance != null)
         {
             FloatingTextManager.Instance.Show($"{buildingName} 건설 완료!", transform.position + Vector3.up);
         }

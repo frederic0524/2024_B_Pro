@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private float targetVerticalRoataion = 0;   //목표 수직 회전 각도
     private float verticalRotationSpeed = 240f; //수직 회전 속도 
 
-
+   
 
     //내부 변수들
     public bool isFirstPerson = true;          //1인칭 모드 인지 여부 
@@ -66,11 +66,11 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        HandleRotation();
+    {        
+        HandleRotation();    
         HandleCameraToggle();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             HandleJump();
         }
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSenesitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSenesitivity * Time.deltaTime;
 
-        if (isFirstPerson)
+        if(isFirstPerson)
         {
             //1인칭 카메라 로직은 유지
             transform.rotation = Quaternion.Euler(0.0f, CurrentX, 0.0f);
@@ -165,16 +165,16 @@ public class PlayerController : MonoBehaviour
             cameraRight.Normalize();
 
             //이동 벡터 계산
-            movement = cameraForward * moveVertical + cameraRight * moveHorizontal;
+            movement = cameraForward * moveVertical + cameraRight * moveHorizontal;            
         }
         else
         {
             //캐릭터 기준으로 이동 (1인칭)
-            movement = transform.right * moveHorizontal + transform.forward * moveVertical;
-        }
-
+            movement = transform.right * moveHorizontal + transform.forward * moveVertical;            
+        }     
+        
         //이동 방향으로 캐릭터 회전
-        if (movement.magnitude > 0.1f)
+        if(movement.magnitude > 0.1f)
         {
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
     public float GetVerticalVelocity()  //플레이어의 Y축 속도 확인 
     {
-        return rb.velocity.y;
+        return rb.velocity.y;   
     }
 
 }

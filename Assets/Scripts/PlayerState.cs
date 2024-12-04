@@ -1,15 +1,15 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//PlayerState ëª¨ë“  í”Œë ˆì´ì–´ ìƒíƒœì˜ ê¸°ë³¸ì´ ë˜ëŠ” ì¶”ìƒ í´ë˜ìŠ¤
+//PlayerState ¸ğµç ÇÃ·¹ÀÌ¾î »óÅÂÀÇ ±âº»ÀÌ µÇ´Â Ãß»ó Å¬·¡½º
 public abstract class PlayerState
 {
-    protected PlayerStateMachine stateMachine;        //ìƒíƒœ ë¨¸ì‹ ì— ëŒ€í•œ ì°¸ì¡° (ì´í›„ êµ¬í˜„)
-    protected PlayerController playerController;        //í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ì— ëŒ€í•œ ì°¸ì¡°
-    protected PlayerAnimationManager animationManager;  //ì• ë‹ˆë©”ì´ì…˜ ë§¤ë‹ˆì €ë¥¼ ê°€ì ¸ì˜¨ë‹¤. 
+    protected PlayerStateMachine stateMachine;        //»óÅÂ ¸Ó½Å¿¡ ´ëÇÑ ÂüÁ¶ (ÀÌÈÄ ±¸Çö)
+    protected PlayerController playerController;        //ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¿¡ ´ëÇÑ ÂüÁ¶
+    protected PlayerAnimationManager animationManager;  //¾Ö´Ï¸ŞÀÌ¼Ç ¸Å´ÏÀú¸¦ °¡Á®¿Â´Ù. 
 
-    //ìƒì„±ì: ìƒíƒœ ë¨¸ì‹ ê³¼ í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ì´ˆê¸°í™”
+    //»ı¼ºÀÚ: »óÅÂ ¸Ó½Å°ú ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ ÃÊ±âÈ­
     public PlayerState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -17,23 +17,23 @@ public abstract class PlayerState
         this.animationManager = stateMachine.GetComponent<PlayerAnimationManager>();
     }
 
-    //ê°€ìƒ ë©”ì„œë“œë“¤ : í•˜ìœ„ í´ë˜ìŠ¤ì—ì„œ í•„ìš”ì— ë”°ë¼ ì˜¤ë²„ë¼ì´ë“œ
-    public virtual void Enter() { }     //ìƒíƒœ ì§„ì… ì‹œ í˜¸ì¶œ
-    public virtual void Exit() { }      //ìƒíƒœ ì¢…ë£Œ ì‹œ í˜¸ì¶œ
-    public virtual void Update() { }    //ë§¤ í”„ë ˆì„ í˜¸ì¶œ
-    public virtual void FixedUpdate() { }   //ê³ ì • ì‹œê°„ ê°„ê²©ìœ¼ë¡œ í˜¸ì¶œ (ë¬¼ë¦¬ ì—°ì‚°ìš©)
+    //°¡»ó ¸Ş¼­µåµé : ÇÏÀ§ Å¬·¡½º¿¡¼­ ÇÊ¿ä¿¡ µû¶ó ¿À¹ö¶óÀÌµå
+    public virtual void Enter() { }     //»óÅÂ ÁøÀÔ ½Ã È£Ãâ
+    public virtual void Exit() { }      //»óÅÂ Á¾·á ½Ã È£Ãâ
+    public virtual void Update() { }    //¸Å ÇÁ·¹ÀÓ È£Ãâ
+    public virtual void FixedUpdate() { }   //°íÁ¤ ½Ã°£ °£°İÀ¸·Î È£Ãâ (¹°¸® ¿¬»ê¿ë)
 
-    //ìƒíƒœ ì „í™˜ê³¼ ì¡°ê±´ì„ ì²´í¬í•˜ëŠ” ë©”ì„œë“œ
+    //»óÅÂ ÀüÈ¯°ú Á¶°ÇÀ» Ã¼Å©ÇÏ´Â ¸Ş¼­µå
     protected void CheckTransitions()
     {
-        if (playerController.isGrounded())
+        if(playerController.isGrounded())
         {
-            //ì§€ìƒì— ìˆì„ ë•Œì˜ ìƒíƒœ ì „í™˜ ë¡œì§
-            if (Input.GetKeyDown(KeyCode.Space))         //ìŠ¤í˜ì´ìŠ¤ë¥¼ ëˆŒì—ˆì„ë•Œ
+            //Áö»ó¿¡ ÀÖÀ» ¶§ÀÇ »óÅÂ ÀüÈ¯ ·ÎÁ÷
+            if(Input.GetKeyDown(KeyCode.Space))         //½ºÆäÀÌ½º¸¦ ´­¾úÀ»¶§
             {
                 stateMachine.TransitionToState(new JumpingState(stateMachine));
             }
-            else if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) //ì´ë™í‚¤ê°€ ëˆŒë ¸ì„ë•Œ 
+            else if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) //ÀÌµ¿Å°°¡ ´­·ÈÀ»¶§ 
             {
                 stateMachine.TransitionToState(new MovingState(stateMachine));
             }
@@ -44,31 +44,31 @@ public abstract class PlayerState
         }
         else
         {
-            //ê³µì¤‘ì— ìˆì„ë•Œ ìƒíƒœ ì „í™˜ ë¡œì§
-            if (playerController.GetVerticalVelocity() > 0)      //ë°›ì•„ì˜¨ Yì¶• ì†ë„ ê°’ì´ + ì¼ë•Œ 
+            //°øÁß¿¡ ÀÖÀ»¶§ »óÅÂ ÀüÈ¯ ·ÎÁ÷
+            if(playerController.GetVerticalVelocity() > 0)      //¹Ş¾Æ¿Â YÃà ¼Óµµ °ªÀÌ + ÀÏ¶§ 
             {
                 stateMachine.TransitionToState(new JumpingState(stateMachine));
             }
-            else
+            else           
             {
-                stateMachine.TransitionToState(new FallingState(stateMachine));  //ë°›ì•„ì˜¨ Yì¶• ì†ë„ ê°’ì´ - ì¼ë•Œ [ë‚™í•˜ ìƒíƒœ]
+                stateMachine.TransitionToState(new FallingState(stateMachine));  //¹Ş¾Æ¿Â YÃà ¼Óµµ °ªÀÌ - ÀÏ¶§ [³«ÇÏ »óÅÂ]
             }
         }
     }
 }
 
-//IdleState : í”Œë ˆì´ì–´ê°€ ì •ì§€í•´ ìˆëŠ” ìƒíƒœ
+//IdleState : ÇÃ·¹ÀÌ¾î°¡ Á¤ÁöÇØ ÀÖ´Â »óÅÂ
 public class IdleState : PlayerState
 {
     public IdleState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Update()
     {
-        CheckTransitions();             //ë§¤ í”„ë ˆì„ë§ˆë‹¤ ìƒíƒœ ì „í™˜ ì¡°ê±´ ì²´í¬ 
+        CheckTransitions();             //¸Å ÇÁ·¹ÀÓ¸¶´Ù »óÅÂ ÀüÈ¯ Á¶°Ç Ã¼Å© 
     }
 }
 
-//MovingState : í”Œë ˆì´ì–´ê°€ ì´ë™í•˜ëŠ” ìƒíƒœ
+//MovingState : ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ´Â »óÅÂ
 public class MovingState : PlayerState
 {
     private bool isRunning;
@@ -76,42 +76,42 @@ public class MovingState : PlayerState
 
     public override void Update()
     {
-        //ë‹¬ë¦¬ê¸° ì…ë ¥ í™•ì¸
+        //´Ş¸®±â ÀÔ·Â È®ÀÎ
         isRunning = Input.GetKey(KeyCode.LeftShift);
 
-        CheckTransitions();             //ë§¤ í”„ë ˆì„ë§ˆë‹¤ ìƒíƒœ ì „í™˜ ì¡°ê±´ ì²´í¬ 
+        CheckTransitions();             //¸Å ÇÁ·¹ÀÓ¸¶´Ù »óÅÂ ÀüÈ¯ Á¶°Ç Ã¼Å© 
     }
     public override void FixedUpdate()
     {
-        playerController.HandleMovement();              //ë¬¼ë¦¬ ê¸°ë°˜ ì´ë™ ì²˜ë¦¬ 
+        playerController.HandleMovement();              //¹°¸® ±â¹İ ÀÌµ¿ Ã³¸® 
     }
 }
 
-//JumpingState : í”Œë ˆì´ì–´ê°€ ì í”„ ìƒíƒœì¼ë•Œ
+//JumpingState : ÇÃ·¹ÀÌ¾î°¡ Á¡ÇÁ »óÅÂÀÏ¶§
 public class JumpingState : PlayerState
 {
     public JumpingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Update()
     {
-        CheckTransitions();             //ë§¤ í”„ë ˆì„ë§ˆë‹¤ ìƒíƒœ ì „í™˜ ì¡°ê±´ ì²´í¬ 
+        CheckTransitions();             //¸Å ÇÁ·¹ÀÓ¸¶´Ù »óÅÂ ÀüÈ¯ Á¶°Ç Ã¼Å© 
     }
     public override void FixedUpdate()
     {
-        playerController.HandleMovement();              //ë¬¼ë¦¬ ê¸°ë°˜ ì´ë™ ì²˜ë¦¬ 
+        playerController.HandleMovement();              //¹°¸® ±â¹İ ÀÌµ¿ Ã³¸® 
     }
 }
-//FallingState : í”Œë ˆì´ì–´ê°€ ë‚™í•˜ ì¤‘ì¼Â‹Âš 
+//FallingState : ÇÃ·¹ÀÌ¾î°¡ ³«ÇÏ ÁßÀÏ‹š 
 public class FallingState : PlayerState
 {
     public FallingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Update()
     {
-        CheckTransitions();             //ë§¤ í”„ë ˆì„ë§ˆë‹¤ ìƒíƒœ ì „í™˜ ì¡°ê±´ ì²´í¬ 
+        CheckTransitions();             //¸Å ÇÁ·¹ÀÓ¸¶´Ù »óÅÂ ÀüÈ¯ Á¶°Ç Ã¼Å© 
     }
     public override void FixedUpdate()
     {
-        playerController.HandleMovement();              //ë¬¼ë¦¬ ê¸°ë°˜ ì´ë™ ì²˜ë¦¬ 
+        playerController.HandleMovement();              //¹°¸® ±â¹İ ÀÌµ¿ Ã³¸® 
     }
 }

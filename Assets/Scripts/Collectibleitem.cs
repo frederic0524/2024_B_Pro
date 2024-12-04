@@ -18,15 +18,18 @@ public class CollectibleItem : MonoBehaviour
 
         inventory.AddItem(itemType);            //아이템을 인벤토리에 추가
 
-        if(FloatingTextManager.instance != null )
+        if(FloatingTextManager.Instance != null)
         {
-            Vector3 textPosition = transform.position + Vector3.up * 0.5f;
-            FloatingTextManager.Instance.Show($"+{itemName}", textPosition);
+            Vector3 textPosition = transform.position + Vector3.up * 0.5f;              //아이템 위치보다 약간 위에 텍스트 생성 
+            FloatingTextManager.Instance.Show($"+ {itemName}" , textPosition);
         }
+
         Debug.Log($"{itemName} 수집 완료");     //아이템 수집 완료 메세지 출력
+
+
         StartCoroutine(RespawnRoutine());       //아이템 리스폰 코루틴 실행 
     }
-
+    
     //아이템 리스폰을 처리하는 코루틴
     private IEnumerator RespawnRoutine()
     {

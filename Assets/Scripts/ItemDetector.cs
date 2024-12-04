@@ -9,6 +9,9 @@ public enum ItemType
     Plant,                  //식물
     Bush,                   //수풀
     Tree,                   //나무 
+    VegetableStew,          //야채 스튜 (허기 회복용)
+    FruitSalad,             //과일 샐러스 (허기 회복용)
+    RepairKit               //수리 키트 (우주복 수리용)
 }
 
 public class ItemDetector : MonoBehaviour
@@ -45,16 +48,16 @@ public class ItemDetector : MonoBehaviour
 
     //주변의 수집 가능한 아이템을 감지하는 함수 
     private void CheckForItems()
-    {
+    {       
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, checkRadius);  //감지 범위 내의 모든 콜라이더를 찾음
 
         float closestDistance = float.MaxValue;     //가장 가까운 거리의 초기값
         CollectibleItem closestItem = null;         //가장 가까운 아이템 초기값
-
+      
         foreach (Collider collider in hitColliders)   //각 콜라이더를 검사하여 수집 가능한 아이템을 찾음
         {
             CollectibleItem item = collider.GetComponent<CollectibleItem>();        //아이템을 감지 
-            if (item != null && item.canCollect) //아이템이 있고 수집 가능한지 확인
+            if(item != null && item.canCollect) //아이템이 있고 수집 가능한지 확인
             {
                 float distance = Vector3.Distance(transform.position, item.transform.position); //거리 계산
                 if (distance < closestDistance)     //더 가까운 아이템을 발견 시 업데이트 
